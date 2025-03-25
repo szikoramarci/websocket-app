@@ -4,14 +4,20 @@
 
     const recordings = ref([]);
 
+    recordingService.subscribeForRecordings((data) => {
+        recordings.value = data;
+        console.log(data)            
+    });      
+
     onMounted(() => {
 
-        recordingService.subscribeForRecordings((data) => {
-            recordings.value = data;
-            console.log(data)
-            refresh();
-        });                
+        
+             
+        setTimeout(() => {
+            refresh(); 
+        }, 1000);
     });
+    
 
     const refresh = () => {
         recordingService.refreshRecordingList();

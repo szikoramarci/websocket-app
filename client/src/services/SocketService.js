@@ -1,19 +1,17 @@
-import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 
-const socket = new SockJS('http://localhost:8080/ws');
-const stompClient = new Client({
+const socket = new WebSocket('ws://localhost:8080/ws');
+const socketClient = new Client({
   webSocketFactory: () => socket,
   reconnectDelay: 5000,
-  debug: str => console.log('[STOMP]', str),
+  debug: str => console.log('[SOCKET]', str),
 });
 
 /* INIT CONNECTION */
 let isConnected = false;
 let pendingSubscriptions = [];
 
-stompClient.onConnect = () => {    
-
+socketClient.onConnect = () => {    
   pendingSubscriptions.forEach(fn => fn());
   pendingSubscriptions.length = 0;
 
@@ -21,11 +19,11 @@ stompClient.onConnect = () => {
   console.log('STOMP connected');     
 };
 
-stompClient.onStompError = (frame) => {
+socketClient.onStompError = (frame) => {
   console.error('STOMP error', frame);
 };
 
-stompClient.activate();
+socketClient.activate();
 
 const checkConnection = () => {
   if (!isConnected) {
@@ -33,9 +31,9 @@ const checkConnection = () => {
   }
 }
 
-const subscribe = (destination, callback) => {  
-  const doSubscribe = () => {
-    stompClient.subscribe(destination, message => {
+const subscribe = (destination, callback) => {    
+  const doSubscribe = () => {    
+    socketClient.subscribe(destination, message => {         
       const data = JSON.parse(message.body);
       callback(data);
     });
@@ -49,8 +47,8 @@ const subscribe = (destination, callback) => {
 };
 
 const send = (destination, headers, data) => {
-  checkConnection()
-  stompClient.send(destination, headers, data);
+  checkConnection();
+  socketClient.publish({ destination, headers, data})
 }
 
 export default {  
