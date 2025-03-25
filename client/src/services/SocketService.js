@@ -10,6 +10,7 @@ const socketClient = new Client({
 /* INIT CONNECTION */
 let isConnected = false;
 let pendingSubscriptions = [];
+let connectionCallbacks = [];
 
 socketClient.onConnect = () => {    
   pendingSubscriptions.forEach(fn => fn());
@@ -17,6 +18,8 @@ socketClient.onConnect = () => {
 
   isConnected = true;
   console.log('STOMP connected');     
+
+  connectionCallbacks.forEach(fn => fn());
 };
 
 socketClient.onStompError = (frame) => {
@@ -51,7 +54,12 @@ const send = (destination, headers, data) => {
   socketClient.publish({ destination, headers, data})
 }
 
+const addConnectionCallback = (callback) => {
+  connectionCallbacks.push(callback);
+}
+
 export default {  
+  addConnectionCallback,
   subscribe,
   send
 };
