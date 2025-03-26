@@ -1,6 +1,5 @@
 <script setup>
     import { Card, Tag, Button } from 'primevue';
-    import router from '@/router/index'
 
     defineProps({
         recording: Object
@@ -15,10 +14,6 @@
             return 'warn';
         }
     };
-
-    const goToDetails = (publicId) => {
-        router.push(`/recording/${publicId}`)
-    }
 </script>
 <template>
     <Card>
@@ -28,7 +23,7 @@
             <Tag :severity="generateSeverity(recording.status)" :value="recording.status"></Tag>
         </template>
         <template #footer>
-            <Button label="Details" severity="secondary" outlined @click="goToDetails(recording.publicId)" />
+            <Button label="Details" severity="secondary" outlined class="w-full" />
         </template>
     </Card>    
 </template>

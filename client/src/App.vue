@@ -1,7 +1,5 @@
-<script setup>
-  import RecordingList from '@/components/RecordingList.vue';
-</script>
-
 <template>
-  <RecordingList/>
+  <div id="app">
+    <router-view />
+  </div>
 </template>

@@ -1,24 +1,10 @@
-<script setup>
-    import { ref, onMounted } from 'vue';
-    import recordingService from '@/services/RecordingService';
-    import websocketService from '@/services/SocketService';
+<script setup>    
     import Panel from "primevue/panel"
-    import RecordingElement from './RecordingElement.vue';
-
-    const recordings = ref([]);
-
-    websocketService.addConnectionCallback(() => {
-        refresh();
+    import RecordingElement from './RecordingElement.vue';   
+    
+    defineProps({
+        recordings: Array
     });
-
-    recordingService.subscribeForRecordings((data) => {
-        recordings.value = data;
-        console.log(data)            
-    });             
-
-    const refresh = () => {
-        recordingService.refreshRecordingList();
-    };
 </script>
 <template>
     <Panel header="Recordings">

@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RecordingDto {
 
+    private String publicId;
     private String title;
     private int duration;
     private RecordingStatus status;

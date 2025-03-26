@@ -10,6 +10,7 @@ public class RecordingMapper {
 
     public Recording toEntity(RecordingDto dto) {
         return Recording.builder()
+                .publicId(dto.getPublicId())
                 .title(dto.getTitle())
                 .duration(dto.getDuration())
                 .status(dto.getStatus())
@@ -21,6 +22,7 @@ public class RecordingMapper {
 
     public RecordingDto toDto(Recording entity) {
         return RecordingDto.builder()
+                .publicId(entity.getPublicId())
                 .title(entity.getTitle())
                 .duration(entity.getDuration())
                 .status(entity.getStatus())
