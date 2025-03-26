@@ -1,18 +1,18 @@
-import '@/assets/main.css';
+import '@/assets/main.css'
 
 import { createApp } from 'vue'
-import PrimeVue from 'primevue/config';
+import PrimeVue from 'primevue/config'
 import App from './App.vue'
-import Aura from '@primeuix/themes/aura';
+import Aura from '@primeuix/themes/aura'
 import router from '@/router/index'
-import ToastService from 'primevue/toastservice';
+import ToastService from 'primevue/toastservice'
 
 const app = createApp(App)
-app.use(ToastService);
+app.use(ToastService)
 app.use(router)
 app.use(PrimeVue, {
-    theme: {
-        preset: Aura
-    }
-});
+  theme: {
+    preset: Aura,
+  },
+})
 app.mount('#app')
