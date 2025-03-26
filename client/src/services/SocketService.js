@@ -1,6 +1,6 @@
 import { Client } from '@stomp/stompjs'
 
-const socket = new WebSocket('ws://localhost:8080/ws')
+const socket = new WebSocket(import.meta.env.VITE_WEBSOCKET_ENDPOINT)
 const socketClient = new Client({
   webSocketFactory: () => socket,
   reconnectDelay: 5000,
