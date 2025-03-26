@@ -9,7 +9,11 @@ export default defineConfig({
     vue()
   ],
   define: {
-    global: {}, 
+    global: true, 
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
   },
   resolve: {
     alias: {
