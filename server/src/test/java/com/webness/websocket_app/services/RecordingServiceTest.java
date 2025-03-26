@@ -1,0 +1,110 @@
+package com.webness.websocket_app.services;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.webness.websocket_app.dto.RecordingDto;
+import com.webness.websocket_app.dto.RecordingUpdateRequest;
+import com.webness.websocket_app.entity.Recording;
+import com.webness.websocket_app.mapper.RecordingMapper;
+import com.webness.websocket_app.repository.RecordingRepository;
+import com.webness.websocket_app.service.RecordingService;
+
+@ExtendWith(MockitoExtension.class)
+class RecordingServiceTest {
+
+    @Mock
+    RecordingRepository recordingRepository;
+
+    @Mock
+    RecordingMapper recordingMapper;
+
+    @InjectMocks
+    RecordingService recordingService;
+
+    @Test
+    void findAll_shouldReturnMappedDtos() {
+        // given
+        Recording entity = new Recording();
+        RecordingDto dto = new RecordingDto();
+        when(recordingRepository.findAll()).thenReturn(List.of(entity));
+        when(recordingMapper.toDto(entity)).thenReturn(dto);
+
+        // when
+        List<RecordingDto> result = recordingService.findAll();
+
+        // then
+        assertEquals(1, result.size());
+        assertSame(dto, result.get(0));
+    }
+
+    @Test
+    void findByPublicId_shouldReturnDto_whenExists() {
+        // given
+        String publicId = "abc123";
+        Recording entity = new Recording();
+        RecordingDto dto = new RecordingDto();
+
+        when(recordingRepository.findByPublicId(publicId)).thenReturn(Optional.of(entity));
+        when(recordingMapper.toDto(entity)).thenReturn(dto);
+
+        // when
+        RecordingDto result = recordingService.findByPublicId(publicId);
+
+        // then
+        assertSame(dto, result);
+    }
+
+    @Test
+    void findByPublicId_shouldThrow404_whenNotFound() {
+        // given
+        String publicId = "missing-id";
+        when(recordingRepository.findByPublicId(publicId)).thenReturn(Optional.empty());
+
+        // when + then
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> {
+            recordingService.findByPublicId(publicId);
+        });
+
+        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+    }
+
+    @Test
+    void updateByPublicId_shouldUpdateAndReturnDto() {
+        // given
+        String publicId = "abc123";
+        Recording entity = new Recording();
+        RecordingDto dto = new RecordingDto();
+
+        RecordingUpdateRequest req = new RecordingUpdateRequest();
+        req.setActivation("TEST_ACT");
+        req.setSedation("TEST_SED");
+        req.setMedication("TEST_MED");
+
+        when(recordingRepository.findByPublicId(publicId)).thenReturn(Optional.of(entity));
+        when(recordingRepository.save(entity)).thenReturn(entity);
+        when(recordingMapper.toDto(entity)).thenReturn(dto);
+
+        // when
+        RecordingDto result = recordingService.updateByPublicId(publicId, req);
+
+        // then
+        assertEquals(dto, result);
+        assertEquals("TEST_ACT", entity.getActivation());
+        assertEquals("TEST_SED", entity.getSedation());
+        assertEquals("TEST_MED", entity.getMedication());
+    }
+}
