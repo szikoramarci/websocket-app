@@ -1,0 +1,13 @@
+services:
+  server:
+    build: ./server
+    ports:
+      - "8080:8080"
+
+  client:
+    build: ./client
+    ports:
+      - "5173:80"
+    depends_on:
+      server:
+        condition: service_started
