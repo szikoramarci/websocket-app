@@ -16,7 +16,6 @@
 
     recordingService.subscribeForRecordings((data) => {
         recordings.value = data;
-        console.log(data)
     });
 
     const refreshList = () => {

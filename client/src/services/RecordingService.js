@@ -1,11 +1,15 @@
 import socketService from "./SocketService";
 
 const subscribeForRecordings = (callback) => {
-    socketService.subscribe('/topic/recordings', callback)
+    socketService.subscribe('/queue/topic/recordings', callback)
 }
 
 const subscribeForSingleRecording = (callback) => {
-    socketService.subscribe('/topic/recording/single', callback)
+    socketService.subscribe('/queue/topic/recording/single', callback)
+}
+
+const subscribeForUpdateEvent = (callback) => {
+    socketService.subscribe('/queue/topic/recording/updated', callback)
 }
 
 const refreshRecordingList = () => {
@@ -16,9 +20,15 @@ const getSingleRecording = (recordingPublicId) => {
     socketService.send('/app/recording/get/' + recordingPublicId, {}, {});
 };
 
+const updateRecording = (recordingPublicId, updateRequest) => {
+    socketService.send('/app/recording/update/' + recordingPublicId, {}, updateRequest);
+}
+
 export default {
     subscribeForRecordings,
     subscribeForSingleRecording,
+    subscribeForUpdateEvent,
     refreshRecordingList,
-    getSingleRecording
+    getSingleRecording,
+    updateRecording
 };

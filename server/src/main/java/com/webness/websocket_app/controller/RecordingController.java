@@ -29,14 +29,14 @@ public class RecordingController {
     private final RecordingService recordingService;
 
     @MessageMapping("/recording/list")
-    @SendTo("/topic/recordings")
+    @SendToUser("/topic/recordings")
     public List<RecordingDto> list() {      
         log.info("Get all recording elements.");    
         return recordingService.findAll();
     }
 
     @MessageMapping("/recording/get/{publicId}")
-    @SendTo("/topic/recording/single")
+    @SendToUser("/topic/recording/single")
     public RecordingDto get(@DestinationVariable String publicId) {
         log.info("Get recording with publicId: " + publicId);
         return recordingService.findByPublicId(publicId);                
@@ -46,20 +46,9 @@ public class RecordingController {
     @SendToUser("/topic/recording/updated")
     public RecordingDto update(
         @DestinationVariable String publicId, 
-        @Valid RecordingUpdateRequest request,
-        Errors errors
+        @Valid RecordingUpdateRequest request
     ) {
-        log.info("Updating recording with publicId: " + publicId);
-        
-        if (errors.hasErrors()) {            
-            String errorMessages = errors.getAllErrors().stream()
-            .map(DefaultMessageSourceResolvable::getDefaultMessage)
-            .collect(Collectors.joining("; "));
-
-            log.warn("Validation failed: {}", errorMessages);
-            throw new IllegalArgumentException("Invalid data: " + errorMessages);
-        }
-
+        log.info("Updating recording with publicId: " + publicId);        
         return recordingService.updateByPublicId(publicId, request);
     }
 

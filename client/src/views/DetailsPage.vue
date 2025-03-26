@@ -20,7 +20,6 @@
 
     recordingService.subscribeForSingleRecording((data) => {
         recording.value = data;    
-        console.log(data)
     });
 
     const refreshRecordingItem = () => {

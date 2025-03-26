@@ -27,12 +27,6 @@ socketClient.onStompError = (frame) => {
 
 socketClient.activate();
 
-const checkConnection = () => {
-  if (!isConnected) {
-    throw new Error('There is no live connection yet!');
-  }
-}
-
 const subscribe = (destination, callback) => {    
   const doSubscribe = () => {    
     socketClient.subscribe(destination, message => {         
@@ -50,8 +44,9 @@ const subscribe = (destination, callback) => {
 
 const send = (destination, headers, data) => {  
   if (!isConnected) return;
-  
-  socketClient.publish({ destination, headers, data})
+
+  const body = JSON.stringify(data);
+  socketClient.publish({ destination, headers, body})
 }
 
 const addConnectionCallback = (callback) => {
