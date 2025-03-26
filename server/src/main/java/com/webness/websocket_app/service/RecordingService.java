@@ -1,7 +1,6 @@
 package com.webness.websocket_app.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,26 +23,26 @@ public class RecordingService {
 
     private final RecordingRepository recordingRepository;
     private final RecordingMapper recordingMapper;
-    
+
     @Transactional(readOnly = true)
-    public List<RecordingDto> findAll() {            
+    public List<RecordingDto> findAll() {
         return recordingRepository.findAll()
-            .stream()
-            .map(recordingMapper::toDto)
-            .toList();
+                .stream()
+                .map(recordingMapper::toDto)
+                .toList();
     }
 
     @Transactional(readOnly = true)
-    public RecordingDto findByPublicId(String publicId) {        
+    public RecordingDto findByPublicId(String publicId) {
         return recordingRepository.findByPublicId(publicId)
-            .map(recordingMapper::toDto).orElseThrow(() -> {
-                log.warn("No recording found with publicId: " + publicId);
-                return new ResponseStatusException(HttpStatus.NOT_FOUND);
-            });
+                .map(recordingMapper::toDto).orElseThrow(() -> {
+                    log.warn("No recording found with publicId: " + publicId);
+                    return new ResponseStatusException(HttpStatus.NOT_FOUND);
+                });
     }
 
     @Transactional()
-    public RecordingDto updateByPublicId(String publicId, RecordingUpdateRequest request) {        
+    public RecordingDto updateByPublicId(String publicId, RecordingUpdateRequest request) {
         log.debug("Update details - sedation: " + request.getSedation()
                 + ", activation: " + request.getActivation()
                 + ", medication: " + request.getMedication());
@@ -55,9 +54,9 @@ public class RecordingService {
 
         recording.setSedation(request.getSedation());
         recording.setActivation(request.getActivation());
-        recording.setMedication(request.getMedication());   
+        recording.setMedication(request.getMedication());
 
         return recordingMapper.toDto(recordingRepository.save(recording));
-    }   
-            
+    }
+
 }

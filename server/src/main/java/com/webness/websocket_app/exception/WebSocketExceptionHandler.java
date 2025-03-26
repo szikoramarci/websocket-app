@@ -35,13 +35,13 @@ public class WebSocketExceptionHandler {
         String errorMessage = ex.getConstraintViolations().stream()
                 .map(cv -> cv.getMessage())
                 .collect(Collectors.joining("; "));
-                
+
         log.error("Constraint error: " + errorMessage);
 
         return new ErrorResponse("constraint_error", "Constraint error", errorMessage);
     }
 
-     @MessageExceptionHandler(Exception.class)
+    @MessageExceptionHandler(Exception.class)
     @SendToUser("/topic/errors")
     public ErrorResponse handleGenericException(Exception ex) {
         log.error("Unkown error: " + ex.getMessage());

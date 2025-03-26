@@ -17,7 +17,7 @@ public class RecordingMapper {
                 .sedation(dto.getSedation())
                 .activation(dto.getActivation())
                 .medication(dto.getMedication())
-                .build();   
+                .build();
     }
 
     public RecordingDto toDto(Recording entity) {
@@ -30,6 +30,6 @@ public class RecordingMapper {
                 .activation(entity.getActivation())
                 .medication(entity.getMedication())
                 .build();
-    }   
+    }
 
 }

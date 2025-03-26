@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class RecordingUpdateRequest {
-    
+
     @NotBlank(message = "The sedation should be filled.")
     @Size(max = 1000, message = "The sedation should be maximum 1000 charachters long.")
     String sedation;
