@@ -28,7 +28,7 @@ public class RecordingController {
     }
 
     @MessageMapping("/recording/get/{publicId}")
-    @SendToUser("/topic/recording/single")
+    @SendTo("/topic/recording/single")
     public RecordingDto get(@DestinationVariable String publicId) {
         return recordingService.findByPublicId(publicId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

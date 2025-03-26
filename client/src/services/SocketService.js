@@ -7,7 +7,6 @@ const socketClient = new Client({
   debug: str => console.log('[SOCKET]', str),
 });
 
-/* INIT CONNECTION */
 let isConnected = false;
 let pendingSubscriptions = [];
 let connectionCallbacks = [];
@@ -49,8 +48,9 @@ const subscribe = (destination, callback) => {
   }
 };
 
-const send = (destination, headers, data) => {
-  checkConnection();
+const send = (destination, headers, data) => {  
+  if (!isConnected) return;
+  
   socketClient.publish({ destination, headers, data})
 }
 

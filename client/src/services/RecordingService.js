@@ -13,7 +13,7 @@ const refreshRecordingList = () => {
 };
 
 const getSingleRecording = (recordingPublicId) => {
-    socketService.send('/app/recording/get/${recordingPublicId}', {}, {});
+    socketService.send('/app/recording/get/' + recordingPublicId, {}, {});
 };
 
 export default {

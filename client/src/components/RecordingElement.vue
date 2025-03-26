@@ -1,33 +1,35 @@
 <script setup>
-    import { Card, Tag, Button } from 'primevue';
+    import { Card, Button } from 'primevue';
+    import RecordingStatus from './RecordingStatus.vue';
+    import RecordingReportEdit from './RecordingReportEdit.vue';
+    import RecordingReportInfo from './RecordingReportInfo.vue';
     import router from '@/router/index'
 
     defineProps({
-        recording: Object
-    });
-
-    const generateSeverity = (status) => {
-        if (status === 'RECORDED') {
-            return 'danger';
-        } else if (status === 'SCHEDULED') {
-            return 'success';
-        } else {
-            return 'warn';
-        }
-    };
+        recording: Object,
+        showDetails: Boolean
+    });    
 
     const goToDetails = (publicId) => {
         router.push(`/recording/${publicId}`)
     }
+
+    const isEditableRecord = (recording) => {
+        return recording.status == 'RECORDED';
+    }
 </script>
 <template>
-    <Card>
+    <Card v-if="recording">
         <template #title>{{ recording.title }}</template>
         <template #subtitle>{{ recording.duration  }} seconds</template>
         <template #content>
-            <Tag :severity="generateSeverity(recording.status)" :value="recording.status"></Tag>
-        </template>
-        <template #footer>
+            <RecordingStatus :status="recording.status"></RecordingStatus>
+            <div v-if="showDetails">
+                <RecordingReportEdit v-if="isEditableRecord(recording)" :recording="recording"></RecordingReportEdit>
+                <RecordingReportInfo v-else :sedation="recording.sedation" :activation="recording.activation" :medication="recording.medication"></RecordingReportInfo>
+            </div>            
+        </template>        
+        <template #footer v-if="!showDetails">
             <Button label="Details" severity="secondary" outlined @click="goToDetails(recording.publicId)" />
         </template>
     </Card>    

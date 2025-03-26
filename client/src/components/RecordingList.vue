@@ -9,7 +9,7 @@
 <template>
     <Panel header="Recordings">
         <p class="m-0">
-            <RecordingElement v-for="recording in recordings" :key="recording.id" :recording="recording" />
+            <RecordingElement v-for="recording in recordings" :key="recording.id" :recording="recording"/>
         </p>
     </Panel>
 </template>

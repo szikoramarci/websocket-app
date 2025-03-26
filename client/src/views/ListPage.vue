@@ -1,13 +1,17 @@
 <script setup>
     import RecordingList from '@/components/RecordingList.vue';
-    import { ref } from 'vue';
+    import { ref, onMounted } from 'vue';
     import recordingService from '@/services/RecordingService';
     import websocketService from '@/services/SocketService';
 
     const recordings = ref([]);
 
+    onMounted(() => {
+        refreshList();
+    })
+
     websocketService.addConnectionCallback(() => {
-        refresh();
+        refreshList();
     });
 
     recordingService.subscribeForRecordings((data) => {
@@ -15,7 +19,7 @@
         console.log(data)
     });
 
-    const refresh = () => {
+    const refreshList = () => {
         recordingService.refreshRecordingList();
     };
 </script>
