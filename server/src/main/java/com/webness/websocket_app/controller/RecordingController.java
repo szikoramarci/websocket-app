@@ -29,13 +29,6 @@ public class RecordingController {
         return recordingService.findAll();
     }
 
-    @MessageMapping("/recording/get/{publicId}")
-    @SendToUser("/topic/recording/single")
-    public RecordingDto get(@DestinationVariable String publicId) {
-        log.info("Get recording with publicId: " + publicId);
-        return recordingService.findByPublicId(publicId);
-    }
-
     @MessageMapping("/recording/update/{publicId}")
     @SendToUser("/topic/recording/updated")
     public RecordingDto update(

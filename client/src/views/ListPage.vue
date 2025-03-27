@@ -1,28 +1,10 @@
 <script setup>
 import RecordingList from '@/components/RecordingList.vue'
-import { ref, onMounted } from 'vue'
-import recordingService from '@/services/RecordingService'
-import websocketService from '@/services/SocketService'
+import { useRecordingStore } from '@/stores/RecordingStore'
 
-const recordings = ref([])
-
-onMounted(() => {
-  refreshList()
-})
-
-websocketService.addConnectionCallback(() => {
-  refreshList()
-})
-
-recordingService.subscribeForRecordings((data) => {  
-  recordings.value = data
-})
-
-const refreshList = () => {
-  recordingService.refreshRecordingList()
-}
+const recordingStore = useRecordingStore()
 </script>
 
 <template>
-  <RecordingList :recordings="recordings" />
+  <RecordingList :recordings="recordingStore.getAll" />
 </template>

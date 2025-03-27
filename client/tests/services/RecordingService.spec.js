@@ -35,10 +35,4 @@ describe('RecordingService', () => {
     expect(socketService.send).toHaveBeenCalledWith('/app/recording/update/abc123', {}, update)
   })
 
-  it('should subscribe to single recording updates', () => {
-    const cb = vi.fn()
-    RecordingService.subscribeForSingleRecording(cb)
-
-    expect(socketService.subscribe).toHaveBeenCalledWith('/queue/topic/recording/single', cb)
-  })
 })

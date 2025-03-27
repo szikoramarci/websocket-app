@@ -1,21 +1,10 @@
 <script setup>
-import { useToast } from 'primevue/usetoast'
 import { Form } from '@primevue/forms'
 import { InputText, Button } from 'primevue'
 import recordingService from '@/services/RecordingService'
 
-const toast = useToast()
-
 const { recording } = defineProps({
   recording: Object,
-})
-
-recordingService.subscribeForUpdateEvent((data) => {
-  toast.add({
-    severity: 'success',
-    summary: 'Saved',
-    detail: 'Recording updated successfully!',
-  })
 })
 
 const onFormSubmit = (originalEvent) => {

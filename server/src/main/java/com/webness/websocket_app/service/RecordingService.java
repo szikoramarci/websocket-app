@@ -32,15 +32,6 @@ public class RecordingService {
                 .toList();
     }
 
-    @Transactional(readOnly = true)
-    public RecordingDto findByPublicId(String publicId) {
-        return recordingRepository.findByPublicId(publicId)
-                .map(recordingMapper::toDto).orElseThrow(() -> {
-                    log.warn("No recording found with publicId: " + publicId);
-                    return new ResponseStatusException(HttpStatus.NOT_FOUND);
-                });
-    }
-
     @Transactional()
     public RecordingDto updateByPublicId(String publicId, RecordingUpdateRequest request) {
         log.debug("Update details - sedation: " + request.getSedation()

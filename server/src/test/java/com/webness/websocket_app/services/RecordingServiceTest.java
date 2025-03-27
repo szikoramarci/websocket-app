@@ -52,37 +52,6 @@ class RecordingServiceTest {
     }
 
     @Test
-    void findByPublicId_shouldReturnDto_whenExists() {
-        // given
-        String publicId = "abc123";
-        Recording entity = new Recording();
-        RecordingDto dto = new RecordingDto();
-
-        when(recordingRepository.findByPublicId(publicId)).thenReturn(Optional.of(entity));
-        when(recordingMapper.toDto(entity)).thenReturn(dto);
-
-        // when
-        RecordingDto result = recordingService.findByPublicId(publicId);
-
-        // then
-        assertSame(dto, result);
-    }
-
-    @Test
-    void findByPublicId_shouldThrow404_whenNotFound() {
-        // given
-        String publicId = "missing-id";
-        when(recordingRepository.findByPublicId(publicId)).thenReturn(Optional.empty());
-
-        // when + then
-        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> {
-            recordingService.findByPublicId(publicId);
-        });
-
-        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
-    }
-
-    @Test
     void updateByPublicId_shouldUpdateAndReturnDto() {
         // given
         String publicId = "abc123";

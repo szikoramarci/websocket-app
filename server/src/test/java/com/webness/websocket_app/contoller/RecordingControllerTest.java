@@ -50,21 +50,6 @@ class RecordingControllerTest {
     }
 
     @Test
-    void get_shouldReturnRecordingDto_whenFound() {
-        // given
-        String publicId = "abc123";
-        RecordingDto dto = new RecordingDto();
-        when(recordingService.findByPublicId(publicId)).thenReturn(dto);
-
-        // when
-        RecordingDto result = controller.get(publicId);
-
-        // then
-        assertSame(dto, result);
-        verify(recordingService).findByPublicId(publicId);
-    }
-
-    @Test
     void update_shouldCallServiceAndReturnDto() {
         // given
         String publicId = "abc123";
