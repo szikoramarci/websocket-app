@@ -12,6 +12,7 @@ websocketService.subscribe('/queue/topic/errors', (errorMessage) => {
     detail: errorMessage.details,
   })
 })
+
 </script>
 <template>
   <div id="app">

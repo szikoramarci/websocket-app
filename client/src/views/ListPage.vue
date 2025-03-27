@@ -14,7 +14,7 @@ websocketService.addConnectionCallback(() => {
   refreshList()
 })
 
-recordingService.subscribeForRecordings((data) => {
+recordingService.subscribeForRecordings((data) => {  
   recordings.value = data
 })
 

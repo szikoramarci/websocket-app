@@ -1,14 +1,15 @@
 <script setup>
 import { Tag } from 'primevue'
+import RecordingStatusEnum from '@/enums/RecordingStatusEnum'
 
 defineProps({
   status: String,
 })
 
 const generateSeverity = (status) => {
-  if (status === 'RECORDED') {
+  if (status === RecordingStatusEnum.RECORDED) {
     return 'danger'
-  } else if (status === 'SCHEDULED') {
+  } else if (status === RecordingStatusEnum.SCHEDULED) {
     return 'success'
   } else {
     return 'warn'
