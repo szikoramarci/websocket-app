@@ -10,13 +10,13 @@ This repository contains two separate parts:
 
 ## Table of Contents
 
-- [Requirements & Used Technologies](#-requirements--used-technologies)
-- [Environment Variables](#-environment-variables)
-- [Running the App](#-running-the-app)
-  - [Option 1: Manual Startup](#-option-1-manual-startup)
-  - [Option 2: Docker Compose](#-option-2-docker-compose)
-- [Technical Architecture & Design Decisions](#-technical-architecture--design-decisions)
-- [Running Tests](#-running-tests)
+- [Requirements & Used Technologies](#user-content-requirements--used-technologies)
+- [Environment Variables](#user-content-environment-variables)
+- [Running the App](#user-content-running-the-app)
+  - [Option 1: Manual Startup](#user-content-option-1-manual-startup)
+  - [Option 2: Docker Compose](#user-content-option-2-docker-compose)
+- [Technical Architecture & Design Decisions](#user-content-technical-architecture--design-decisions)
+- [Running Tests](#running-tests)
 
 ## Requirements & Used Technologies
 
@@ -77,7 +77,7 @@ VITE_WEBSOCKET_ENDPOINT=ws://localhost:8080/ws
 
 You can start the app either manually or using Docker Compose.
 
-Set up the [environment variables](#-environment-variables) for both options.
+Set up the [environment variables](#user-content-environment-variables) for both options.
 
 ---
 
