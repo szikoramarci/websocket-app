@@ -5,10 +5,6 @@ COPY . .
 RUN npm install && npm run build
 
 # Production stage
-FROM node:18-alpine
-WORKDIR /app
-RUN npm install -g serve
-COPY --from=build-stage /app/dist ./dist
-
-EXPOSE 3000
-CMD ["serve", "-s", "dist", "-l", "3000"]
+FROM nginx:alpine
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
