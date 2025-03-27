@@ -3,7 +3,6 @@ import { Card, Button } from 'primevue'
 import RecordingStatus from './RecordingStatus.vue'
 import RecordingReportEdit from './RecordingReportEdit.vue'
 import RecordingReportInfo from './RecordingReportInfo.vue'
-import RecordingStatusEnum from '@/enums/RecordingStatusEnum'
 import router from '@/router/index'
 
 defineProps({
@@ -14,20 +13,16 @@ defineProps({
 const goToDetails = (publicId) => {
   router.push(`/recording/${publicId}`)
 }
-
-const isEditableRecord = (recording) => {
-  return recording.status == RecordingStatusEnum.RECORDED
-}
 </script>
 <template>
   <Card v-if="recording">
     <template #title>{{ recording.title }}</template>
     <template #subtitle>{{ recording.duration }} seconds</template>
     <template #content>
-      <RecordingStatus :status="recording.status"></RecordingStatus>
+      <RecordingStatus :uiConfig="recording.uiConfig"></RecordingStatus>
       <div v-if="showDetails">
         <RecordingReportEdit
-          v-if="isEditableRecord(recording)"
+          v-if="recording.uiConfig.editable"
           :recording="recording"
         ></RecordingReportEdit>
         <RecordingReportInfo

@@ -3,6 +3,7 @@ package com.webness.websocket_app.mapper;
 import org.springframework.stereotype.Component;
 
 import com.webness.websocket_app.dto.RecordingDto;
+import com.webness.websocket_app.dto.UIConfig;
 import com.webness.websocket_app.entity.Recording;
 
 @Component
@@ -29,6 +30,7 @@ public class RecordingMapper {
                 .sedation(entity.getSedation())
                 .activation(entity.getActivation())
                 .medication(entity.getMedication())
+                .uiConfig(UIConfig.fromStatus(entity.getStatus()))
                 .build();
     }
 

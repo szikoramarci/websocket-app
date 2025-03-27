@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.webness.websocket_app.dto.RecordingDto;
 import com.webness.websocket_app.dto.RecordingUpdateRequest;
 import com.webness.websocket_app.entity.Recording;
+import com.webness.websocket_app.entity.RecordingStatus;
 import com.webness.websocket_app.mapper.RecordingMapper;
 import com.webness.websocket_app.repository.RecordingRepository;
 import com.webness.websocket_app.service.RecordingService;
@@ -52,12 +53,13 @@ class RecordingServiceTest {
     }
 
     @Test
-    void updateByPublicId_shouldUpdateAndReturnDto() {
+    void updateByPublicId_shouldUpdateAndReturnDto_whenRecordingIsEditable() {
         // given
         String publicId = "abc123";
         Recording entity = new Recording();
-        RecordingDto dto = new RecordingDto();
+        entity.setStatus(RecordingStatus.RECORDED);
 
+        RecordingDto dto = new RecordingDto();
         RecordingUpdateRequest req = new RecordingUpdateRequest();
         req.setActivation("TEST_ACT");
         req.setSedation("TEST_SED");
@@ -75,5 +77,27 @@ class RecordingServiceTest {
         assertEquals("TEST_ACT", entity.getActivation());
         assertEquals("TEST_SED", entity.getSedation());
         assertEquals("TEST_MED", entity.getMedication());
+    }
+
+    @Test
+    void updateByPublicId_shouldThrowException_whenRecordingIsNotEditable() {
+        // given
+        String publicId = "not-editable-id";
+        Recording entity = new Recording();
+        entity.setStatus(RecordingStatus.SCHEDULED);
+
+        RecordingUpdateRequest req = new RecordingUpdateRequest();
+        req.setActivation("X");
+        req.setSedation("Y");
+        req.setMedication("Z");
+
+        when(recordingRepository.findByPublicId(publicId)).thenReturn(Optional.of(entity));
+
+        // when + then
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class,
+                () -> recordingService.updateByPublicId(publicId, req));
+
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, ex.getStatusCode());
+        assertEquals("This recording is not editable.", ex.getReason());
     }
 }

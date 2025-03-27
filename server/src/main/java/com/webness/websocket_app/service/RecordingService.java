@@ -11,6 +11,7 @@ import com.webness.websocket_app.dto.RecordingDto;
 import com.webness.websocket_app.dto.RecordingUpdateRequest;
 import com.webness.websocket_app.entity.Recording;
 import com.webness.websocket_app.mapper.RecordingMapper;
+import com.webness.websocket_app.policy.RecordingPolicy;
 import com.webness.websocket_app.repository.RecordingRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -32,16 +33,20 @@ public class RecordingService {
                 .toList();
     }
 
-    @Transactional()
+    @Transactional
     public RecordingDto updateByPublicId(String publicId, RecordingUpdateRequest request) {
-        log.debug("Update details - sedation: " + request.getSedation()
-                + ", activation: " + request.getActivation()
-                + ", medication: " + request.getMedication());
+        log.debug("Update details - sedation={}, activation={}, medication={}", 
+            request.getSedation(), request.getActivation(), request.getMedication());
 
         Recording recording = recordingRepository.findByPublicId(publicId).orElseThrow(() -> {
-            log.warn("No recording found with publicId: " + publicId);
+            log.warn("No recording found with publicId={}",  publicId);
             return new ResponseStatusException(HttpStatus.NOT_FOUND);
         });
+
+        if (!RecordingPolicy.isEditable(recording.getStatus())) {            
+            log.warn("Attempted to update a non-editable recording. publicId={}, status={}", publicId, recording.getStatus());
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "This recording is not editable.");
+        }
 
         recording.setSedation(request.getSedation());
         recording.setActivation(request.getActivation());

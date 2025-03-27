@@ -34,7 +34,7 @@ public class RecordingController {
     public RecordingDto update(
             @DestinationVariable String publicId,
             @Valid RecordingUpdateRequest request) {
-        log.info("Updating recording with publicId: " + publicId);
+        log.info("Updating recording with publicId={}", publicId);
         return recordingService.updateByPublicId(publicId, request);
     }
 

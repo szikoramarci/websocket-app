@@ -20,4 +20,5 @@ public class RecordingDto {
     private String sedation;
     private String activation;
     private String medication;
+    private UIConfig uiConfig;
 }
