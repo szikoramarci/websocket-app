@@ -13,6 +13,10 @@ defineProps({
 const goToDetails = (publicId) => {
   router.push(`/recording/${publicId}`)
 }
+
+const backToTheList = () => {
+  router.push(`/`)
+}
 </script>
 <template>
   <Card v-if="recording">
@@ -40,6 +44,9 @@ const goToDetails = (publicId) => {
         outlined
         @click="goToDetails(recording.publicId)"
       />
+    </template>
+    <template #footer v-else>
+      <Button label="Back to the list" severity="secondary" outlined @click="backToTheList()" />
     </template>
   </Card>
 </template>
