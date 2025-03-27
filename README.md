@@ -15,6 +15,7 @@ This repository contains two separate parts:
 - [Running the App](#-running-the-app)
   - [Option 1: Manual Startup](#-option-1-manual-startup)
   - [Option 2: Docker Compose](#-option-2-docker-compose)
+- [Technical Architecture & Design Decisions](#-technical-architecture--design-decisions)
 
 ## 📦 Requirements
 
@@ -131,3 +132,39 @@ To also remove volumes (e.g. if switching DB setup):
 ```bash
 docker-compose down -v
 ```
+
+## 🧱 Technical Architecture & Design Decisions
+
+This project was designed with simplicity and demonstrability in mind. Below are the key architectural choices:
+
+### 🔌 WebSocket-based Communication
+
+The UI (Vue 3 frontend) communicates with the backend (Spring Boot) using **WebSocket**, utilizing the **STOMP protocol** on top.
+
+- This enables real-time, bidirectional communication.
+- STOMP provides a lightweight message format and supports topics/subscriptions.
+- _(Note: In most cases — including this one — REST would have been a simpler and more straightforward choice.)_
+
+### 🗄️ In-Memory H2 Database
+
+The backend uses an **H2 in-memory database**, which is:
+
+- Lightweight and requires no external setup.
+- Automatically populated with a small amount of test/demo data on startup.
+- Ideal for quick demos or proof-of-concept implementations.
+- _(Note: All data is lost when the application stops — it's not intended for production use.)_
+
+### 🔐 No Authentication or Authorization
+
+To keep the architecture simple and focused on core features, **authentication and authorization were deliberately left out**.
+
+- In a real-world scenario, user access control would be essential.
+- This project focuses on technical interactions rather than security layers.
+
+### 🧠 Frontend State Management
+
+The frontend uses **local state management** to:
+
+- Track and organize domain entities.
+- Optimize ongoing processes (e.g., workflows or interactive states).
+- Avoid redundant API/WebSocket calls and improve responsiveness.
