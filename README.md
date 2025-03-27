@@ -61,3 +61,65 @@ Copy it to `.env` and set the correct backend WebSocket URL:
 ```properties
 VITE_WEBSOCKET_ENDPOINT=ws://localhost:8080/ws
 ```
+
+## 🚀 Running the App
+
+You can start the app either manually or using Docker Compose.
+
+Set up the environment variables for both options.
+
+---
+
+### 🧭 Option 1: Manual Startup
+
+**Backend (Spring Boot)**  
+Navigate to the `server/` directory and run:
+
+- `./mvnw spring-boot:run`  
+  *or* run `Application.java` from your IDE.
+
+The backend will be available at:  
+[http://localhost:8080](http://localhost:8080)
+
+If the H2 console is enabled, access it at:  
+[http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+
+---
+
+**Frontend (Vue 3 + Vite)**  
+Navigate to the `client/` directory and run:
+
+- `npm install`  
+- `npm run dev`
+
+The frontend will be available at:  
+[http://localhost:5173](http://localhost:5173)
+
+---
+
+### 🐳 Option 2: Docker Compose
+
+Make sure you have Docker and Docker Compose installed.
+
+From the project root, run:
+```bash
+docker-compose up --build
+```
+
+This will:
+- Build and start the backend (Spring Boot)
+- Build and start the frontend (Vite)
+
+The app will be available at:  
+- Frontend: [http://localhost:5173](http://localhost:5173)  
+- Backend: [http://localhost:8080](http://localhost:8080)
+
+To stop the containers:  
+```bash
+docker-compose down
+```
+
+To also remove volumes (e.g. if switching DB setup):  
+```bash
+docker-compose down -v
+```
