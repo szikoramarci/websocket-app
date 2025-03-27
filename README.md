@@ -8,7 +8,17 @@ This repository contains two separate parts:
 
 ---
 
-## 📦 Requirements
+## 📚 Table of Contents
+
+- [Requirements](#-requirements)
+- [Environment Variables](#-environment-variables)
+- [Running the App](#-running-the-app)
+  - [Option 1: Manual Startup](#-option-1-manual-startup)
+  - [Option 2: Docker Compose](#-option-2-docker-compose)
+
+  ---
+
+## 📦 [Requirements](#-requirements)
 
 Make sure you have the following installed:
 
@@ -24,7 +34,7 @@ Make sure you have the following installed:
 
 ---
 
-## ⚙️ Environment Variables
+## ⚙️ [Environment Variables](#-environment-variables)
 
 ### Backend (`server/`)
 
@@ -62,15 +72,15 @@ Copy it to `.env` and set the correct backend WebSocket URL:
 VITE_WEBSOCKET_ENDPOINT=ws://localhost:8080/ws
 ```
 
-## 🚀 Running the App
+## 🚀 [Running the App](#-running-the-app)
 
 You can start the app either manually or using Docker Compose.
 
-Set up the environment variables for both options.
+Set up the [environment variables](#-environment-variables) for both options.
 
 ---
 
-### 🧭 Option 1: Manual Startup
+### 🧭 [Option 1: Manual Startup](#-option-1-manual-startup)
 
 **Backend (Spring Boot)**  
 Navigate to the `server/` directory and run:
@@ -97,7 +107,7 @@ The frontend will be available at:
 
 ---
 
-### 🐳 Option 2: Docker Compose
+### 🐳 [Option 2: Docker Compose](#-option-2-docker-compose)
 
 Make sure you have Docker and Docker Compose installed.
 
