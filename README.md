@@ -34,6 +34,7 @@ A sample config file is available as:
 
 You can copy it to `application.properties` and customize it as needed:
 
+```properties
 # Logging config
 logging.level.org.springframework=INFO
 
@@ -46,6 +47,7 @@ spring.datasource.password=
 # H2 Console (optional)
 spring.h2.console.enabled=true
 spring.h2.console.path=/h2-console
+```
 
 ### Frontend (`client/`)
 
@@ -56,4 +58,6 @@ A sample environment file is available as:
 
 Copy it to `.env` and set the correct backend WebSocket URL:
 
+```properties
 VITE_WEBSOCKET_ENDPOINT=ws://localhost:8080/ws
+```
