@@ -16,6 +16,7 @@ This repository contains two separate parts:
   - [Option 1: Manual Startup](#-option-1-manual-startup)
   - [Option 2: Docker Compose](#-option-2-docker-compose)
 - [Technical Architecture & Design Decisions](#-technical-architecture--design-decisions)
+- [Running Tests](#-running-tests)
 
 ## 📦 Requirements
 
@@ -168,3 +169,28 @@ The frontend uses **local state management** to:
 - Track and organize domain entities.
 - Optimize ongoing processes (e.g., workflows or interactive states).
 - Avoid redundant API/WebSocket calls and improve responsiveness.
+
+## 🧪 Running Tests
+
+This project includes both backend and frontend unit tests.
+
+---
+
+### 🔙 Backend (JUnit + Mockito)
+
+To run backend tests locally:
+
+```bash
+./mvnw test
+```
+
+---
+
+### 🖥️ Frontend (Vitest)
+
+Navigate to the `client/` directory and run:
+
+```bash
+npm install
+npm run test
+```
