@@ -1,4 +1,4 @@
-# 🧩 Recordings - websocket based full-stack application
+# Recordings - websocket based full-stack application
 
 A full-stack application with a WebSocket-based Java backend and a Vue 3 frontend.  
 This repository contains two separate parts:
@@ -8,9 +8,9 @@ This repository contains two separate parts:
 
 ---
 
-## 📚 Table of Contents
+## Table of Contents
 
-- [Requirements](#-requirements)
+- [Requirements & Used Technologies](#-requirements--used-technologies)
 - [Environment Variables](#-environment-variables)
 - [Running the App](#-running-the-app)
   - [Option 1: Manual Startup](#-option-1-manual-startup)
@@ -18,9 +18,10 @@ This repository contains two separate parts:
 - [Technical Architecture & Design Decisions](#-technical-architecture--design-decisions)
 - [Running Tests](#-running-tests)
 
-## 📦 Requirements
+## Requirements & Used Technologies
 
-Make sure you have the following installed:
+To run or contribute to this project, make sure you have the following installed.  
+This list also reflects the core technologies used in the application.
 
 | Tool        | Version         |
 |-------------|------------------|
@@ -34,13 +35,13 @@ Make sure you have the following installed:
 
 ---
 
-## ⚙️ Environment Variables
+## Environment Variables
 
 ### Backend (`server/`)
 
 Configuration is handled via `application.properties`.  
 A sample config file is available as:  
-📄 `server/src/main/resources/application.example.properties`
+`server/src/main/resources/application.example.properties`
 
 You can copy it to `application.properties` and customize it as needed:
 
@@ -64,7 +65,7 @@ spring.h2.console.path=/h2-console
 The frontend requires a WebSocket endpoint to communicate with the backend.
 
 A sample environment file is available as:
-📄 `client/.env.example`
+`client/.env.example`
 
 Copy it to `.env` and set the correct backend WebSocket URL:
 
@@ -72,7 +73,7 @@ Copy it to `.env` and set the correct backend WebSocket URL:
 VITE_WEBSOCKET_ENDPOINT=ws://localhost:8080/ws
 ```
 
-## 🚀 Running the App
+## Running the App
 
 You can start the app either manually or using Docker Compose.
 
@@ -80,7 +81,7 @@ Set up the [environment variables](#-environment-variables) for both options.
 
 ---
 
-### 🧭 Option 1: Manual Startup
+### Option 1: Manual Startup
 
 **Backend (Spring Boot)**  
 Navigate to the `server/` directory and run:
@@ -107,7 +108,7 @@ The frontend will be available at:
 
 ---
 
-### 🐳 Option 2: Docker Compose
+### Option 2: Docker Compose
 
 Make sure you have Docker and Docker Compose installed.
 
@@ -134,11 +135,11 @@ To also remove volumes (e.g. if switching DB setup):
 docker-compose down -v
 ```
 
-## 🧱 Technical Architecture & Design Decisions
+## Technical Architecture & Design Decisions
 
 This project was designed with simplicity and demonstrability in mind. Below are the key architectural choices:
 
-### 🔌 WebSocket-based Communication
+### WebSocket-based Communication
 
 The UI (Vue 3 frontend) communicates with the backend (Spring Boot) using **WebSocket**, utilizing the **STOMP protocol** on top.
 
@@ -146,7 +147,7 @@ The UI (Vue 3 frontend) communicates with the backend (Spring Boot) using **WebS
 - STOMP provides a lightweight message format and supports topics/subscriptions.
 - _(Note: In most cases — including this one — REST would have been a simpler and more straightforward choice.)_
 
-### 🗄️ In-Memory H2 Database
+### In-Memory H2 Database
 
 The backend uses an **H2 in-memory database**, which is:
 
@@ -155,14 +156,22 @@ The backend uses an **H2 in-memory database**, which is:
 - Ideal for quick demos or proof-of-concept implementations.
 - _(Note: All data is lost when the application stops — it's not intended for production use.)_
 
-### 🔐 No Authentication or Authorization
+### No Authentication or Authorization
 
 To keep the architecture simple and focused on core features, **authentication and authorization were deliberately left out**.
 
 - In a real-world scenario, user access control would be essential.
 - This project focuses on technical interactions rather than security layers.
 
-### 🧠 Frontend State Management
+### UI Framework: PrimeVue
+
+The frontend uses **[PrimeVue](https://primevue.org/)** as its component framework.
+
+- Provides a wide range of pre-built, accessible UI components.
+- Accelerates development by reducing the need for custom styling.
+- Used primarily for status tags, buttons, layout elements, and form controls.
+
+### Frontend State Management
 
 The frontend uses **local state management** to:
 
@@ -170,13 +179,13 @@ The frontend uses **local state management** to:
 - Optimize ongoing processes (e.g., workflows or interactive states).
 - Avoid redundant API/WebSocket calls and improve responsiveness.
 
-## 🧪 Running Tests
+## Running Tests
 
 This project includes both backend and frontend unit tests.
 
 ---
 
-### 🔙 Backend (JUnit + Mockito)
+### Backend (JUnit + Mockito)
 
 To run backend tests locally:
 
@@ -186,7 +195,7 @@ To run backend tests locally:
 
 ---
 
-### 🖥️ Frontend (Vitest)
+### Frontend (Vitest)
 
 Navigate to the `client/` directory and run:
 
